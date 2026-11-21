@@ -35,15 +35,49 @@ inversa del APK original, en una app nueva y ligera.
   cañón arriba/abajo, ametralladora, cañón, misiles y sonido de motor.
 - **Ajustes:** invertir ejes, potencia máxima, ajuste fino de la dirección,
   mandos zurdos, vídeo por TCP y diagnóstico de los paquetes enviados.
+- **Efectos al disparar** (nuevo en 1.1): fogonazos, cañonazo, misiles con
+  estela, explosiones, sacudida de la imagen, vibración y sonidos en el
+  teléfono, replicando el comportamiento de la app original.
+- **Modo objetivos:** blancos virtuales sobre el vídeo para jugar a acertarles.
 - **Parada de seguridad:** al salir de la app se para el motor y se apaga el humo.
 
 ## Capturas
 
-Maquetas de la interfaz (todavía no hay capturas con el vehículo real).
+Capturas reales de la app en un emulador de Android 14, generadas en cada
+compilación. Sin vehículo no hay vídeo, así que las escenas de efectos usan un
+fondo de demostración en lugar de la cámara.
 
-![Pantalla de control](docs/images/pantalla-control.png)
+| | |
+|---|---|
+| ![Ametralladora](docs/images/capturas/ametralladora.jpg) | ![Cañón](docs/images/capturas/canon.jpg) |
+| Ametralladora (mantener pulsado) | Cañonazo |
+| ![Misiles](docs/images/capturas/misiles.jpg) | ![Impacto](docs/images/capturas/impacto.jpg) |
+| Misiles en vuelo | Impacto |
+| ![Modo objetivos](docs/images/capturas/objetivos.jpg) | ![Ajustes](docs/images/capturas/ajustes.jpg) |
+| Modo objetivos: la mira se pone roja sobre un blanco | Ajustes de efectos |
 
-![Pantalla sin conexión](docs/images/pantalla-conexion.png)
+![Sin conexión](docs/images/capturas/inicio.jpg)
+
+## Efectos al disparar
+
+Reproducen lo que hacía la app original, según su código (`FXController`,
+`CannonFX`, `MachineGunFX`, `RocketFX`, `Crosshair` y el modo de juego). Los
+gráficos y sonidos originales no estaban en el APK, así que los dibujos y
+sonidos son propios.
+
+| Arma | Comportamiento (como el original) |
+|---|---|
+| Ametralladora | Se mantiene pulsada; fogonazos en bucle, trazadoras y vibración cada 1 s |
+| Cañón | Destello por fotogramas de 0,08 s; sale arriba o abajo según la posición del cañón |
+| Misiles | Uno por pulsación, alternando lanzador; viaja 2,0 s hasta la mira y explota |
+| Todas | Sacudida de la imagen y vibración al disparar |
+
+En *Ajustes → Efectos* se pueden desactivar los efectos visuales, los sonidos
+del teléfono o la mira, y activar el **modo objetivos**: aparecen blancos sobre
+el vídeo, la mira se mueve con los mandos y se fija sola en un blanco cercano
+(se pone roja), y cada arma les quita vida.
+
+Los sonidos se generan con `tools/generar_sonidos.py`.
 
 ## Instalar
 
@@ -76,6 +110,7 @@ donde apoyas el dedo es el neutro y al soltar vuelve al centro.
 |---|---|
 | Codificador de comandos | Probado: coincide con el código original en 20 000 pasos aleatorios |
 | Compilación | Automática en GitHub Actions en cada cambio |
+| Arranque e interfaz | Probados en un emulador de Android 14 en cada compilación (rama `capturas`) |
 | Funcionamiento con el vehículo | **Sin probar todavía** con un vehículo real |
 
 Pendiente de confirmar con el vehículo: que el rango `0x81`–`0xE4` sea
@@ -121,6 +156,7 @@ app/src/main/java/org/batrc/controller/
   protocol/   CommandEncoder (paquetes), Axis (curvas), Protocol (constantes)
   net/        ToyLink (enlace al Wi-Fi), CarController (bucle UDP), ToyHttp (CGI)
   video/      CarVideo (RTSP de baja latencia con Media3)
+  fx/         Efectos: FxController (lógica), FxLayer (dibujo), FxSound, FxHaptics
   data/       SettingsStore (ajustes)
   ui/         Pantalla de control, mandos y ajustes (Compose)
 ```

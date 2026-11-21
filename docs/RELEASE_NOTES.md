@@ -1,3 +1,5 @@
+**Novedades de la 1.1:** efectos visuales y de sonido al disparar (fogonazos, cañonazo, misiles con estela, explosiones, sacudida y vibración), mira y modo objetivos con blancos virtuales. Se configuran en *Ajustes → Efectos*.
+
 App no oficial para controlar el Batmobile R/C de Mattel por Wi-Fi desde Android 6 a 15.
 
 **Instalar:** descarga `BatRC-Control.apk` en el teléfono, ábrelo y permite instalar desde esa fuente si Android lo pide.

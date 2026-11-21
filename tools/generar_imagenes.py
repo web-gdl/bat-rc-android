@@ -154,18 +154,6 @@ pw, ph = 420, 204
 body += phone(800, 108, pw, ph, f'<g transform="scale({1 / 1.6})">{controller_ui(pw * 1.6, ph * 1.6)}</g>')
 save("banner", W, H, body)
 
-# 2. Interfaz conectada y 3. sin conexión -------------------------------------
-for name, connected, title in (
-    ("pantalla-control", True, "Pantalla de control (maqueta)"),
-    ("pantalla-conexion", False, "Sin conexión con el vehículo (maqueta)"),
-):
-    W, H = 1100, 600
-    pw, ph = 960, 444
-    body = f'<rect width="{W}" height="{H}" fill="{BG}"/>'
-    body += f'<text x="{W / 2}" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="#fff">{title}</text>'
-    body += phone((W - pw) / 2, 100, pw, ph, controller_ui(pw, ph, connected))
-    save(name, W, H, body)
-
 # 4. Estructura del paquete UDP ----------------------------------------------
 W, H = 1200, 520
 body = f'<rect width="{W}" height="{H}" fill="{BG}"/>'

@@ -29,7 +29,23 @@ Desensamblado de `libil2cpp.so` (arm64) de la app original.
 - **Seguridad:** al salir de la app se envía durante 350 ms la orden de parar el motor, centrar la dirección y apagar el humo.
 - **Sin material de la app original:** ni gráficos ni sonidos; icono e interfaz propios.
 
+## Efectos al disparar (versión 1.1)
+
+Comportamiento extraído de `libil2cpp.so` de la app original:
+
+- `Batman.Batcar.Buttons.Weapon`: los botones de armas actúan al pulsar y al soltar (`OnPointerDown` / `OnPointerUp`). La ametralladora envía un solo pulso `11_E4` al pulsar; `SetGunRotationOFF` al soltar no cambia nada en el protocolo.
+- `Batman.FX.MachineGunFX`: hoja de sprites en bucle mientras está activa.
+- `Batman.FX.CannonFX`: animación por fotogramas con un temporizador de 0,08 s; su posición cambia con el estado del cañón (`ShootCannon(isDown)`) y la relación de aspecto (16:9 o 4:3).
+- `Batman.FX.RocketFX`: sistema de partículas que se desplaza en línea recta (`Vector3.Lerp`) durante `lifeTime` = 2,0 s; `RocketFX_Controller` alterna entre varios lanzadores.
+- `FXController.*Vibrate`: vibración al disparar; con la ametralladora, `Handheld.Vibrate` cada 1,0 s mientras dispara. Cañón y misiles esperan 0,5 s en su corrutina.
+- `Buttons.Weapon._camShake`: sacudida de cámara.
+- Modo de juego (`Batman.Game.*`): blancos con vida (`Target._HP`) y explosión; la mira (`Crosshair`) se mueve con los mandos dentro de ±14 (horizontal) y ±4 (vertical) a distancia 25, se pone roja sobre un blanco (`OnTarget`) y se acerca sola a él (`AutoTarget`, `Lerp` 10 × dt).
+
+No recuperable: las imágenes, las animaciones y los sonidos (estaban en el OBB), y los valores ajustados en las escenas (vida de los blancos, cadencias, intensidad de la sacudida). Esos valores y todos los gráficos y sonidos de esta app son propios.
+
 ## Verificación
 
 - El codificador de comandos se prueba en `CommandEncoderTest` contra una transcripción literal de `AndroidMain.getSendCmd()` (20 000 pasos aleatorios y casos fijos). Los tests corren en cada compilación de GitHub Actions.
+- `FxControllerTest` comprueba los tiempos y el comportamiento de los efectos.
+- Cada compilación instala la app en un emulador de Android 14 y guarda capturas reales en la rama `capturas`.
 - La app no se ha probado todavía con un vehículo real.
