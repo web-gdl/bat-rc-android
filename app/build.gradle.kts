@@ -17,7 +17,7 @@ android {
         // En GitHub Actions el número de ejecución sube en cada compilación,
         // así cada APK nuevo se instala encima del anterior.
         versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
-        versionName = "1.0.0"
+        versionName = "1.1.0"
     }
 
     signingConfigs {
@@ -58,6 +58,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

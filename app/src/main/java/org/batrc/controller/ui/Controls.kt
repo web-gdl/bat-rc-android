@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
@@ -141,6 +142,59 @@ fun ActionButton(
         Text(
             text = label,
             color = if (active) Color.Black else Color.White,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+        )
+    }
+}
+
+/**
+ * Botón que actúa mientras se mantiene pulsado, como los botones de armas de
+ * la app original (`OnPointerDown` / `OnPointerUp`).
+ */
+@Composable
+fun HoldButton(
+    label: String,
+    onPress: () -> Unit,
+    onRelease: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var pressed by remember { mutableStateOf(false) }
+    val press by rememberUpdatedState(onPress)
+    val release by rememberUpdatedState(onRelease)
+    val shape = RoundedCornerShape(14.dp)
+    Box(
+        modifier = modifier
+            .defaultMinSize(minWidth = 64.dp, minHeight = 48.dp)
+            .clip(shape)
+            .background(if (pressed) Accent else Color.Black.copy(alpha = 0.5f))
+            .border(1.dp, if (pressed) Accent else Color.White.copy(alpha = 0.4f), shape)
+            .pointerInput(Unit) {
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false)
+                    down.consume()
+                    pressed = true
+                    press()
+                    try {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            val change = event.changes.firstOrNull { it.id == down.id } ?: break
+                            if (!change.pressed) break
+                            change.consume()
+                        }
+                    } finally {
+                        pressed = false
+                        release()
+                    }
+                }
+            }
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            color = if (pressed) Color.Black else Color.White,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,

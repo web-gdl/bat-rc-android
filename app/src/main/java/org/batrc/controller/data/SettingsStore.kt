@@ -19,6 +19,14 @@ data class AppSettings(
     val haptics: Boolean = true,
     /** Muestra el último datagrama enviado. */
     val showDiagnostics: Boolean = false,
+    /** Fogonazos, estelas, explosiones y sacudida al disparar. */
+    val visualEffects: Boolean = true,
+    /** Sonidos de motor y disparos en el teléfono. */
+    val phoneSounds: Boolean = true,
+    /** Mira en el centro de la imagen. */
+    val showCrosshair: Boolean = true,
+    /** Blancos virtuales sobre el vídeo. */
+    val targetMode: Boolean = false,
 )
 
 class SettingsStore(context: Context) {
@@ -38,6 +46,10 @@ class SettingsStore(context: Context) {
             .putBoolean(KEY_VIDEO_TCP, updated.videoOverTcp)
             .putBoolean(KEY_HAPTICS, updated.haptics)
             .putBoolean(KEY_DIAGNOSTICS, updated.showDiagnostics)
+            .putBoolean(KEY_VISUAL_EFFECTS, updated.visualEffects)
+            .putBoolean(KEY_PHONE_SOUNDS, updated.phoneSounds)
+            .putBoolean(KEY_CROSSHAIR, updated.showCrosshair)
+            .putBoolean(KEY_TARGET_MODE, updated.targetMode)
             .apply()
     }
 
@@ -51,6 +63,10 @@ class SettingsStore(context: Context) {
             videoOverTcp = prefs.getBoolean(KEY_VIDEO_TCP, defaults.videoOverTcp),
             haptics = prefs.getBoolean(KEY_HAPTICS, defaults.haptics),
             showDiagnostics = prefs.getBoolean(KEY_DIAGNOSTICS, defaults.showDiagnostics),
+            visualEffects = prefs.getBoolean(KEY_VISUAL_EFFECTS, defaults.visualEffects),
+            phoneSounds = prefs.getBoolean(KEY_PHONE_SOUNDS, defaults.phoneSounds),
+            showCrosshair = prefs.getBoolean(KEY_CROSSHAIR, defaults.showCrosshair),
+            targetMode = prefs.getBoolean(KEY_TARGET_MODE, defaults.targetMode),
         )
     }
 
@@ -62,5 +78,9 @@ class SettingsStore(context: Context) {
         const val KEY_VIDEO_TCP = "video_tcp"
         const val KEY_HAPTICS = "haptics"
         const val KEY_DIAGNOSTICS = "diagnostics"
+        const val KEY_VISUAL_EFFECTS = "visual_effects"
+        const val KEY_PHONE_SOUNDS = "phone_sounds"
+        const val KEY_CROSSHAIR = "crosshair"
+        const val KEY_TARGET_MODE = "target_mode"
     }
 }

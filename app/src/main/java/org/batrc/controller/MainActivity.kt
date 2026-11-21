@@ -30,6 +30,14 @@ class MainActivity : ComponentActivity() {
             window.attributes = attributes
         }
 
+        // Solo en compilaciones de depuración: congela una escena de efectos
+        // para generar capturas (ver tools/capturas.sh).
+        if (BuildConfig.DEBUG && savedInstanceState == null) {
+            intent.getStringExtra(EXTRA_DEMO)?.let { scene ->
+                viewModel.startDemo(scene, intent.getFloatExtra(EXTRA_DEMO_TIME, 0.3f).toDouble())
+            }
+        }
+
         setContent {
             BatRcTheme {
                 ControllerScreen(viewModel)
@@ -51,6 +59,11 @@ class MainActivity : ComponentActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemBars()
+    }
+
+    private companion object {
+        const val EXTRA_DEMO = "fx_demo"
+        const val EXTRA_DEMO_TIME = "fx_time"
     }
 
     private fun hideSystemBars() {

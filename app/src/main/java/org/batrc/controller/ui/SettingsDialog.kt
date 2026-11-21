@@ -69,13 +69,32 @@ fun SettingsDialog(viewModel: MainViewModel, onClose: () -> Unit) {
                     ActionButton("+1 ▶", onClick = { viewModel.calibrateSteering(1) })
                 }
 
+                SectionTitle("Efectos")
+                SwitchRow("Efectos visuales al disparar", settings.visualEffects) { on ->
+                    store.update { it.copy(visualEffects = on) }
+                }
+                SwitchRow("Sonidos en el teléfono", settings.phoneSounds) { on ->
+                    store.update { it.copy(phoneSounds = on) }
+                }
+                SwitchRow("Mostrar mira", settings.showCrosshair) { on ->
+                    store.update { it.copy(showCrosshair = on) }
+                }
+                SwitchRow("Modo objetivos (blancos virtuales)", settings.targetMode && settings.visualEffects) { on ->
+                    store.update { it.copy(targetMode = on, visualEffects = it.visualEffects || on) }
+                }
+                Text(
+                    "En modo objetivos, apunta moviendo los mandos: la mira se pone roja sobre un blanco.",
+                    fontSize = 12.sp,
+                    color = Color.White.copy(alpha = 0.7f),
+                )
+
                 SectionTitle("Vídeo")
                 SwitchRow("Forzar vídeo por TCP", settings.videoOverTcp) { on ->
                     store.update { it.copy(videoOverTcp = on) }
                 }
 
                 SectionTitle("General")
-                SwitchRow("Vibración al pulsar", settings.haptics) { on ->
+                SwitchRow("Vibración", settings.haptics) { on ->
                     store.update { it.copy(haptics = on) }
                 }
                 SwitchRow("Mostrar diagnóstico UDP", settings.showDiagnostics) { on ->
