@@ -30,15 +30,14 @@ shot misiles --es fx_demo missiles --ef fx_time 1.25
 shot impacto --es fx_demo missiles --ef fx_time 2.12
 shot objetivos --es fx_demo targets --ef fx_time 3.62
 
-# Ajustes, desplazado hasta la sección de efectos.
+# Ajustes (la sección de efectos es la primera).
 adb shell am force-stop "$APP"
 adb shell am start -W -n "$APP/.MainActivity"
 sleep 4
 adb shell input tap 2270 96
 sleep 2
-adb shell input swipe 1200 800 1200 250 400
-sleep 2
 adb exec-out screencap -p > "$OUT/ajustes.png"
 echo "captura: ajustes"
 
-adb logcat -d -b crash > "$OUT/errores.txt" || true
+# Solo los fallos de esta app (el emulador registra también los de otras).
+adb logcat -d -b crash | grep -A 30 "$APP" > "$OUT/errores.txt" || true
