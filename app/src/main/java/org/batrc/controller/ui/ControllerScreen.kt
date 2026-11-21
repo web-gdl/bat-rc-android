@@ -110,7 +110,8 @@ fun ControllerScreen(viewModel: MainViewModel) {
                 FxCanvas(
                     controller = viewModel.fx,
                     time = { clock.doubleValue },
-                    showCrosshair = settings.showCrosshair,
+                    // Sin vehículo no se muestra la mira (salvo en modo objetivos o demostración).
+                    showCrosshair = settings.showCrosshair && (connected != null || demo != null),
                     modifier = Modifier.fillMaxSize(),
                 )
             }

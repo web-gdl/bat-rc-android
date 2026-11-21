@@ -28,6 +28,7 @@ private val Fire = Color(0xFFFFB13B)
 private val FireDeep = Color(0xFFFF5A1F)
 private val FireCore = Color(0xFFFFF4C8)
 private val Smoke = Color(0xFF3A3A3A)
+private val Trail = Color(0xFFB8B8B8)
 private val Hud = Color(0xFFFFFFFF)
 private val HudLocked = Color(0xFFFF3B30)
 
@@ -113,7 +114,7 @@ private fun DrawScope.drawMachineGun(fx: FxController, now: Double) {
         drawLine(Fire.copy(alpha = 0.9f), tail, head, strokeWidth = u() * 0.6f, cap = StrokeCap.Round)
         // Fogonazo: estrella irregular que cambia en cada fotograma.
         if ((frame + index) % 3 != 2) {
-            val radius = u() * (5f + rnd.nextFloat() * 4f)
+            val radius = u() * (8f + rnd.nextFloat() * 5f)
             drawStar(muzzle, radius, radius * 0.35f, 7, rnd.nextFloat() * 360f, Fire)
             drawStar(muzzle, radius * 0.55f, radius * 0.2f, 7, rnd.nextFloat() * 360f, FireCore)
             drawCircle(
@@ -194,7 +195,9 @@ private fun DrawScope.drawRocket(rocket: FxController.Rocket, now: Double) {
         val fade = 1f - i / steps.toFloat()
         val wobble = Random(i * 13 + rocket.start.hashCode())
         val drift = Offset((wobble.nextFloat() - 0.5f) * u() * 2f * (1 - fade), -u() * 1.5f * (1 - fade))
-        drawCircle(Smoke.copy(alpha = 0.45f * fade), u() * (1.2f + 3.5f * (1 - fade)), p + drift)
+        // Humo claro y, junto a la cabeza, llama.
+        drawCircle(Trail.copy(alpha = 0.55f * fade), u() * (1.2f + 3.5f * (1 - fade)), p + drift)
+        if (i <= 4) drawCircle(Fire.copy(alpha = 0.8f * (1f - i / 5f)), u() * (2.2f - i * 0.3f), p)
     }
     val head = at(rocket.position(now))
     // Se aleja: más pequeño cuanto más avanza.

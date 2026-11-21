@@ -241,11 +241,12 @@ class FxController(seed: Int = 1051) {
         val CENTER = P(0.5f, 0.46f)
 
         // Posiciones en pantalla (propias: dependen de dónde se vea cada arma en la cámara).
-        val GUN_MUZZLES = listOf(P(0.45f, 0.9f), P(0.55f, 0.9f))
-        val CANNON_UP = P(0.5f, 0.2f)
-        val CANNON_DOWN = P(0.5f, 0.74f)
-        val LAUNCHER_LEFT = P(0.12f, 0.95f)
-        val LAUNCHER_RIGHT = P(0.88f, 0.95f)
+        // Por encima de la fila de botones de armas, para que no queden tapados.
+        val GUN_MUZZLES = listOf(P(0.42f, 0.74f), P(0.58f, 0.74f))
+        val CANNON_UP = P(0.5f, 0.24f)
+        val CANNON_DOWN = P(0.5f, 0.6f)
+        val LAUNCHER_LEFT = P(0.3f, 0.8f)
+        val LAUNCHER_RIGHT = P(0.7f, 0.8f)
 
         // Tiempos del original.
         const val CANNON_FRAME = 0.08
