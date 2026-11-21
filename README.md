@@ -24,8 +24,8 @@ inversa del APK original, en una app nueva y ligera.
 
 ## Características
 
-- **Android 6.0 a 15** (API 23–35). Sin código nativo: funciona en cualquier
-  procesador y en dispositivos con páginas de memoria de 16 KB.
+- **Android 6.0 a 15** (API 23–35), en procesadores ARM y x86 de 32 y 64 bits
+  y en dispositivos con páginas de memoria de 16 KB.
 - **No pide permisos** al usuario: ni ubicación ni dispositivos cercanos.
 - **Conexión automática** al Wi-Fi del vehículo aunque no tenga internet y los
   datos móviles sigan encendidos.

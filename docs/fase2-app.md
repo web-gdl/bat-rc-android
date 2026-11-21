@@ -25,7 +25,7 @@ Desensamblado de `libil2cpp.so` (arm64) de la app original.
 - **Sin permisos peligrosos:** ni ubicación ni `NEARBY_WIFI_DEVICES`. La red del vehículo se reconoce por la IP 192.168.201.x leída de `LinkProperties`, no por el nombre (SSID), que es lo que exigiría esos permisos.
 - **Enlace de red:** `ConnectivityManager.requestNetwork` (Wi-Fi, sin exigir internet) + `bindProcessToNetwork`. Además el socket UDP y las conexiones RTSP/HTTP se atan explícitamente a esa red.
 - **Vídeo:** Media3 ExoPlayer con su módulo RTSP, búfer mínimo, reintento automático y opción de forzar TCP.
-- **Sin código nativo:** compatible con cualquier ABI y con dispositivos de páginas de 16 KB.
+- **Sin código nativo propio.** La única librería nativa es `libandroidx.graphics.path.so` de Compose, incluida para arm64-v8a, armeabi-v7a, x86 y x86_64 y alineada a 16 KB (comprobado en el APK publicado).
 - **Seguridad:** al salir de la app se envía durante 350 ms la orden de parar el motor, centrar la dirección y apagar el humo.
 - **Sin material de la app original:** ni gráficos ni sonidos; icono e interfaz propios.
 
