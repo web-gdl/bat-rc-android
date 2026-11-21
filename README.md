@@ -136,9 +136,11 @@ pulsa *Run*.
 
 El APK queda en `app/build/outputs/apk/release/`.
 
-**Publicar una versión:** crea una etiqueta `vX.Y.Z` y súbela
-(`git tag v1.0.1 && git push origin v1.0.1`). GitHub Actions compila, ejecuta
-los tests y publica `BatRC-Control.apk` en *Releases*.
+**Publicar una versión:** cada cambio en `main` se compila, pasa los tests y
+publica `BatRC-Control.apk` en la Release `v` + `versionName`
+(`app/build.gradle.kts`). Para sacar una versión nueva, sube `versionName`
+(por ejemplo a `1.0.1`); si no lo cambias, se actualiza el APK de la Release
+actual.
 
 ### Firma
 
